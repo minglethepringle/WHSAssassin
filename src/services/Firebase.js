@@ -9,4 +9,5 @@ const config = {
     appId: "1:962420682296:web:d29cef56b5e489cc78c0cd"
 };
 firebase.initializeApp(config);
+firebase.firestore().clearPersistence();
 export default firebase;

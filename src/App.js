@@ -19,6 +19,11 @@ import LoginPage from "./components/login/LoginPage";
 import LogOut from "./components/login/LogOut";
 import ReportKillPage from "./components/report-kill/ReportKillPage";
 import Loading from "./components/loading/Loading";
+import KillReviewPage from "./components/admin/killreview/KillReviewPage";
+import SafeItemPage from "./components/admin/SafeItemPage";
+import PastKillsPage from "./components/admin/pastkills/PastKillsPage";
+import AdminPanelPage from "./components/admin/AdminPanelPage";
+import LeaderboardPage from "./components/leaderboard/LeaderboardPage";
 
 class App extends React.Component {
   constructor() {
@@ -29,6 +34,8 @@ class App extends React.Component {
       userDetails: null,
       loading: true
     }
+
+    this.isAdmin = this.isAdmin.bind(this);
   }
 
   componentDidMount() {
@@ -38,17 +45,15 @@ class App extends React.Component {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         let db = firebase.firestore();
-        db.collection("users").where("uid", "==", user.uid)
+        db.collection("users").doc(user.uid)
         .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                _this.setState({
-                  authenticated: true,
-                  user: user,
-                  userDetails: doc.data(),
-                  loading: false
-                });
-            });
+        .then((doc) => {
+          _this.setState({
+            authenticated: true,
+            user: user,
+            userDetails: doc.data(),
+            loading: false
+          });
         });
       } else {
         _this.setState({
@@ -62,6 +67,11 @@ class App extends React.Component {
     });
   }
 
+  isAdmin() {
+    let adminArr = process.env.REACT_APP_ADMINS.split(",");
+    return this.state.authenticated === true && adminArr.includes(this.state.user.email)
+  }
+
   render() {
     if(this.state.loading) return <Loading/>;
     return (
@@ -69,7 +79,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/" render={(props) => this.state.authenticated === true
-              ? <HomePage userDetails={this.state.userDetails}/>
+              ? <HomePage userDetails={this.state.userDetails} isAdmin={this.isAdmin()}/>
               : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
               />
           )
@@ -81,11 +91,27 @@ class App extends React.Component {
             <LogOut/>
           </Route>
 
-          <Route path="/report-kill" render={(props) => (this.state.authenticated === true)
+          <Route path="/reportkill" render={(props) => (this.state.authenticated === true)
               ? <ReportKillPage userDetails={this.state.userDetails}/>
               : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
               />
-          )
+
+          <Route path="/leaderboard" render={(props) => (this.state.authenticated === true)
+              ? <LeaderboardPage currentUid={this.state.userDetails.uid}/>
+              : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+              />
+
+          <Route path="/admin" render={(props) => this.isAdmin()
+              ? (
+                <>
+                <Route exact path="/admin" component={AdminPanelPage} />
+                <Route path="/admin/killreview" component={KillReviewPage} />
+                <Route path="/admin/safeitem" component={SafeItemPage} />
+                <Route path="/admin/pastkills" component={PastKillsPage} />
+                </>
+              )
+              : <Redirect to={{ pathname: '/', state: { from: props.location } }} />}
+              />
 
         </Switch>
       </Router>

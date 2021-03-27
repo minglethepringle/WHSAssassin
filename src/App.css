@@ -1,10 +1,202 @@
+/*
+    Primary Color: #DF2004 (red)
+    Secondary: #2D353F (gray-black)
+    Tertiary: #727D8B (gray)
+    Green Success: #19FF60
+    Yellow Warning: #FFCD0D
+    Red Danger: #FF3C00
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500&display=swap');
+
+/* General */
+* {
+  font-family: 'Kiwi Maru', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 100%;
+  background-color: black;
+  color: white;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+}
+
+h1 {
+  font-size: xxx-large;
+}
+
+h2 {
+  font-size: xx-large;
+}
+
+h3 {
+  font-size: x-large;
+}
+
+b {
+  font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6, p, b, span, label, legend{
+  color: white;
+}
+
+button {
+  border-radius: 0 !important;
+}
+
+button.backbtn {
+  width: auto;
+  background-color: #BCBCBC;
+}
+
+button.inline {
+  margin: 0 0.2em;
+}
+
+fieldset {
+  padding: 1em !important;
+  border: 2px solid #727D8B !important;
+}
+
+legend {
+  padding: 0 0.5em !important;
+  width: initial !important;
+}
+
+.flex { display: flex; }
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+.flex-1 { flex: 1 1; }
+.flex-0 { flex: 0 1; }
+
+.center { display: block; margin: 0 auto; }
+.col { display: flex; flex: 1 0; }
+.col.home { flex: 1 1; }
+.flex-center { align-items: center; justify-content: center; }
+
+/* Loading */
+.loading-logo {
+  width: 300px;
+  position: absolute;
+  z-index: 500;
+  top: calc(50% - 150px);
+  left: calc(50% - 150px);
+  animation-name: stretch;
+  animation-duration: 1.0s;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
+
+@keyframes stretch {
+  0% {
+      transform: scale(.8);
+  }
+  100% {
+      transform: scale(1.2);
+  }
+}
+
+/* Home Page */
+.intro-div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.homepage-intro-img {
+  width: 300px;
+}
+
+.homepage-intro-enter {
+  opacity: 0;
+}
+.homepage-intro-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.homepage-intro-exit {
+  opacity: 1;
+}
+.homepage-intro-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.homepage-body-enter {
+  opacity: 0;
+}
+.homepage-body-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.homepage-header {
+  background-color: #2D353F;
+  color: white;
+  position: relative;
+}
+
+.report-kill-btn {
+  position: fixed;
+  bottom: 3em;
+  right: 3em;
+
+  width: 80px;
+  height: 80px;
+  border: 2px solid white;
+  border-radius: 999px !important;
+  background-color: #DF2004;
+  color: white;
+}
+
+.report-kill-icons {
+  position: relative;
+}
+
+.report-kill-btn .skull {
+  font-size: 200%;
+}
+
+.report-kill-btn .add {
+  font-size: 80%;
+  position: absolute;
+  top: 0;
+}
+
+/* Login */
+.login-form {
+  width: 400px;
+  margin: 0 auto;
+}
+
+/* Report Kill */
+.kill-selfie {
+  width: 400px;
+  border: 2px dashed white;
+  padding: 1em;
+}
+
 /**
- * Main wrapper
+ * Report Kill select search
  */
  .select-search {
-  width: 300px;
+  width: 100%;
   position: relative;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: initial;
   box-sizing: border-box;
 }
 
@@ -42,10 +234,8 @@
   padding: 0 16px;
   background: #fff;
   border: 1px solid transparent;
-  box-shadow: 0 .0625rem .125rem rgba(0, 0, 0, 0.15);
   border-radius: 3px;
   outline: none;
-  font-family: 'Noto Sans', sans-serif;
   font-size: 14px;
   text-align: left;
   text-overflow: ellipsis;
@@ -98,7 +288,6 @@
   background: #fff;
   border: none;
   outline: none;
-  font-family: 'Noto Sans', sans-serif;
   font-size: 14px;
   text-align: left;
   cursor: pointer;
@@ -109,18 +298,18 @@
 }
 
 .select-search__option.is-selected {
-  background: #2FCC8B;
+  background: #DF2004;
   color: #fff;
 }
 
 .select-search__option.is-highlighted,
 .select-search__option:not(.is-selected):hover {
-  background: rgba(47, 204, 139, 0.1);
+  background: lightgray;
 }
 
 .select-search__option.is-highlighted.is-selected,
 .select-search__option.is-selected:hover {
-  background: #2eb378;
+  background: #DF2004;
   color: #fff;
 }
 
@@ -178,7 +367,7 @@
 }
 
 .select-search:not(.select-search--multiple) .select-search__input:hover {
-  border-color: #2FCC8B;
+  border-color: gray;
 }
 
 
@@ -206,4 +395,9 @@
   padding: 16px;
   text-align: center;
   color: #888;
+}
+
+/* Leaderboard Page */
+tr.highlighted {
+  border: 3px solid yellow;
 }

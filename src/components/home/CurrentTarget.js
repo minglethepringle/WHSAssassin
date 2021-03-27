@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Card } from 'react-bootstrap';
 import firebase from "../../services/Firebase";
 class CurrentTarget extends Component {
     constructor(props) {
@@ -10,7 +11,6 @@ class CurrentTarget extends Component {
 
     componentDidMount() {
         if(this.props.targetUid == null || this.props.targetUid.length <= 0) return;
-
         let db = firebase.firestore();
         db.collection("users").where("uid", "==", this.props.targetUid)
         .get()
@@ -25,7 +25,18 @@ class CurrentTarget extends Component {
 
 
     render() { 
-        return <h1>{this.state.targetName}</h1>;
+        return (
+            <div className="mb-3">
+                <Card bg="dark">
+                    <Card.Body className="text-center">
+                        <Card.Title><u>CURRENT TARGET</u></Card.Title>
+                        <Card.Text>
+                        <h1>{this.state.targetName.length > 0 ? this.state.targetName : "NONE"}</h1>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </div>    
+        );
     }
 }
  

@@ -39,14 +39,16 @@ class SignIn extends Component {
                 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" name="password" onChange={this.handleChange} value={this.state.password}/>
+                    <Form.Control type="password" placeholder="Enter password" name="password" onChange={this.handleChange} value={this.state.password}/>
                 </Form.Group>
 
                 {this.state.error.length > 0 ? <p className="text-danger">{this.state.error}</p> : <></>}
 
-                <Button variant="primary" type="submit">
-                Submit
-                </Button>
+                <div className="text-center">
+                    <Button variant="primary" type="submit">
+                    Sign In
+                    </Button>
+                </div>  
             </Form>
         );
     }

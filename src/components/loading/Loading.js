@@ -1,5 +1,7 @@
+import logo from "../../images/WHSAssassin.png";
+
 export default function Loading() {
     return (
-        <h1>Loading...</h1>
+        <img className="loading-logo" src={logo} alt="WHSAssassin logo" />
     );
 }

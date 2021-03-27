@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Card } from 'react-bootstrap';
 import firebase from "../../services/Firebase";
 class SafeItem extends Component {
     constructor(props) {
@@ -23,7 +24,18 @@ class SafeItem extends Component {
 
 
     render() { 
-        return <h1>{this.state.safeItem}</h1>;
+        return (
+        <div className="mb-3">
+            <Card bg="dark">
+                <Card.Body className="text-center">
+                    <Card.Title><u>SAFE ITEM</u></Card.Title>
+                    <Card.Text>
+                    <h1>{this.state.safeItem.length > 0 ? this.state.safeItem : "NONE"}</h1>
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+        </div>   
+        );
     }
 }
  

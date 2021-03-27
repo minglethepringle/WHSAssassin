@@ -28,7 +28,7 @@ class SignUp extends Component {
                 var user = userCredential.user;
 
                 if(user != null) {
-                    firebase.firestore().collection("users").add({
+                    firebase.firestore().collection("users").doc(user.uid).set({
                         uid: user.uid,
                         firstName: this.state.firstName,
                         lastName: this.state.lastName,
@@ -71,9 +71,11 @@ class SignUp extends Component {
 
                 {this.state.error.length > 0 ? <p className="text-danger">{this.state.error}</p> : <></>}
 
-                <Button variant="primary" type="submit">
-                Submit
-                </Button>
+                <div className="text-center">
+                    <Button variant="primary" type="submit">
+                    Submit
+                    </Button>
+                </div>  
             </Form>
         );
     }
