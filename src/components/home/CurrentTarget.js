@@ -31,7 +31,7 @@ class CurrentTarget extends Component {
                     <Card.Body className="text-center">
                         <Card.Title><u>CURRENT TARGET</u></Card.Title>
                         <Card.Text>
-                        <h1>{this.state.targetName.length > 0 ? this.state.targetName : "NONE"}</h1>
+                        <h2><b>{this.state.targetName.length > 0 ? this.state.targetName : "NONE"}</b></h2>
                         </Card.Text>
                     </Card.Body>
                 </Card>

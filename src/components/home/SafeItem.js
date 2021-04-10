@@ -30,7 +30,7 @@ class SafeItem extends Component {
                 <Card.Body className="text-center">
                     <Card.Title><u>SAFE ITEM</u></Card.Title>
                     <Card.Text>
-                    <h1>{this.state.safeItem.length > 0 ? this.state.safeItem : "NONE"}</h1>
+                    <h2><b>{this.state.safeItem.length > 0 ? this.state.safeItem : "NONE"}</b></h2>
                     </Card.Text>
                 </Card.Body>
             </Card>

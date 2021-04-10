@@ -29,8 +29,8 @@ class LoginPage extends Component {
         return (
             <>
             <div className="text-center mb-5">
-                <img src={logo} style={{"width": "300px"}}/>
-                <h3>WHS Senior Assassin</h3>
+                <img src={logo} style={{"max-width": "300px"}}/>
+                <h3><b>WHS SENIOR ASSASSIN</b></h3>
             </div>
             
             <div className="w-100 flex-center">

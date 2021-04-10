@@ -54,7 +54,7 @@ class HomePage extends Component {
                 >
                     <div className="intro-div flex-center text-center">
                         <img src={logo} className="homepage-intro-img" />
-                        <h2>Welcome to Senior Assassin,</h2>
+                        <h3>Welcome to Senior Assassin,</h3>
                         <h1><b>{this.props.userDetails.firstName}</b>.</h1>
                     </div>
                 </CSSTransition>
@@ -67,9 +67,9 @@ class HomePage extends Component {
                 >
                     <>
                     <div>
-                        <div className="homepage-header text-center flex-row p-4 mb-3">
-                            <h1>Greetings, <b>{this.props.userDetails.firstName}.</b></h1>
-                            <Link to="/logout"><Button variant="link">Log Out</Button></Link>
+                        <div className="homepage-header text-center flex-row p-3">
+                            <h2>Greetings, <b>{this.props.userDetails.firstName}.</b></h2>
+                            <Link to="/logout"><Button variant="link"><small>Log Out</small></Button></Link>
                         </div>
                         <div className="p-3">
                             <div className="mb-3">
@@ -103,7 +103,7 @@ class HomePage extends Component {
                                     <Card.Body className="text-center">
                                         <Card.Title><u>ASSASSINATIONS</u></Card.Title>
                                         <Card.Text>
-                                        <h1>{this.props.userDetails.kills}</h1>
+                                        <h2><b>{this.props.userDetails.kills}</b></h2>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
@@ -121,6 +121,14 @@ class HomePage extends Component {
                             </Link>
                         : <></> 
                         }
+
+                        <Row className="homepage-navbar">
+                            <Col><p>Text</p></Col>
+                            <Col><p>Text</p></Col>
+                            <Col><p>Text</p></Col>
+                            <Col><p>Text</p></Col>
+                            <Col><p>Text</p></Col>
+                        </Row>
                     </div>
                     </>
                 </CSSTransition>

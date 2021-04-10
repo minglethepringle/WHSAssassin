@@ -30,18 +30,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
 
-h1 {
-  font-size: xxx-large;
-}
-
-h2 {
-  font-size: xx-large;
-}
-
-h3 {
-  font-size: x-large;
-}
-
 b {
   font-weight: bold;
 }
@@ -50,7 +38,7 @@ h1, h2, h3, h4, h5, h6, p, b, span, label, legend{
   color: white;
 }
 
-button {
+button, input {
   border-radius: 0 !important;
 }
 
@@ -177,9 +165,14 @@ legend {
   top: 0;
 }
 
+.homepage-navbar {
+  position: sticky;
+  bottom: 0;
+}
+
 /* Login */
 .login-form {
-  width: 400px;
+  width: 90%;
   margin: 0 auto;
 }
 

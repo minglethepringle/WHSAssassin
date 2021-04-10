@@ -71,8 +71,8 @@ class SignUp extends Component {
 
                 {this.state.error.length > 0 ? <p className="text-danger">{this.state.error}</p> : <></>}
 
-                <div className="text-center">
-                    <Button variant="primary" type="submit">
+                <div className="text-center mt-4">
+                    <Button variant="danger" type="submit" className="w-100">
                     Submit
                     </Button>
                 </div>  
