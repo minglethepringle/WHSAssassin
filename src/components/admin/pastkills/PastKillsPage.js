@@ -64,29 +64,26 @@ class PastKillsPage extends Component {
     render() { 
         return (
             <>
-            <div className="p-5">
-                <div className="homepage-header text-center flex-row p-4 mb-3">
-                    <h1>Past Assassinations</h1>
-                </div>
-                <Link to="/admin" className="w-100 center text-center mb-3">Go Back</Link>
-                <div>
-                    <Table bordered className="text-white">
-                        <thead>
-                            <tr>
-                                <th>Assassin</th>
-                                <th>Target</th>
-                                <th>Date/Time</th>
-                                <th>Photo</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.killsList}
-                        </tbody>
-                    </Table>
-                </div>
+            <div className="homepage-header text-center flex-row p-4 mb-3">
+                <h1>Past Assassinations</h1>
             </div>
-                
+            <div className="p-1">
+                <Link to="/admin" className="w-100 center text-center mb-3">Go Back</Link>
+                <Table bordered responsive className="text-white">
+                    <thead>
+                        <tr>
+                            <th>Assassin</th>
+                            <th>Target</th>
+                            <th>Date/Time</th>
+                            <th>Photo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.killsList}
+                    </tbody>
+                </Table>
+            </div>
             </>
         );
     }

@@ -26,6 +26,29 @@ class AdminPanelPage extends Component {
         });
     }
 
+    resetEverything() {
+        if(window.confirm("Are you sure you want to reset everything?") && window.confirm("Are you absolutely positive? This action is irreversible.")) {
+            let db = firebase.firestore();
+            db.collection("users").get().
+            then((querySnapshot) => {
+                let userArr = [];
+                querySnapshot.forEach((doc) => {
+                    userArr.push(doc.data());
+                });
+
+                userArr.forEach(user => {
+                    db.collection("users").doc(user.uid).update({
+                        currentTarget: "",
+                        eliminated: false,
+                        kills: 0
+                    });
+                });
+
+                toast.success("Reset everything!");
+            });
+        }
+    }
+
     resetTargets() {
         if(window.confirm("Are you sure you want to reset all targets?") && window.confirm("Are you absolutely positive? This action is irreversible.")) {
             let db = firebase.firestore();
@@ -60,6 +83,20 @@ class AdminPanelPage extends Component {
                         currentTarget: user.currentTarget
                     });
                 });
+            });
+
+            db.collection("users").where("eliminated", "==", true).get().
+            then((querySnapshot) => {
+                let userArr = [];
+                querySnapshot.forEach((doc) => {
+                    userArr.push(doc.data());
+                });
+                // Update database
+                userArr.forEach(user => {
+                    db.collection("users").doc(user.uid).update({
+                        currentTarget: ""
+                    });
+                });
                 toast.success("Reset all targets and reassigned!");
             });
         }
@@ -71,23 +108,24 @@ class AdminPanelPage extends Component {
             <div className="homepage-header text-center flex-row p-4 mb-3">
                 <h1>Moderator Panel</h1>
             </div>
-            <Link to="/" className="w-100 center text-center mb-3">Go back</Link>
-            <div className="p-5">
+            <div className="p-3">
+                <Link to="/" className="w-100 center text-center mb-3">Go back</Link>
+
                 <Jumbotron fluid className="bg-dark text-center">
                     <Container> 
                         {this.state.numNewKills > 0 ? 
-                            <h1>You have <Link to="/admin/killreview">{this.state.numNewKills} new assassinations</Link> to confirm!</h1>
+                            <h3>There are <Link to="/admin/killreview">{this.state.numNewKills} new assassinations</Link> to confirm!</h3>
                             :
-                            <h1>You have no new assassinations.</h1>
+                            <h3>There are no new assassinations.</h3>
                         }
                     </Container>
                 </Jumbotron>
                 
                 <Row className="mb-3">
-                    <Col>
+                    <Col className="mb-3">
                         <Link to="/admin/safeitem" className="w-100"><Button variant="secondary" size="lg" className="p-5 w-100">Change Safe Item</Button></Link>
                     </Col>
-                    <Col>
+                    <Col className="mb-3">
                         <Link to="/admin/pastkills" className="w-100"><Button variant="secondary" size="lg" className="p-5 w-100">See Past Kills</Button></Link>
                     </Col>
                 </Row>
@@ -97,6 +135,7 @@ class AdminPanelPage extends Component {
                 <br/>
                 
                 <Button variant="link" className="center" onClick={this.resetTargets}>Reset Targets For Everyone</Button>
+                <Button variant="link" className="center text-danger" onClick={this.resetEverything}>Clear Targets, Eliminations, Kills from Everyone</Button>
             </div>
             
         </>);

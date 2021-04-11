@@ -33,14 +33,19 @@ class LeaderboardPage extends Component {
 
     renderLeaderboard() {
         let obj = [];
+        let ranking = 1;
+        let prevUserKills = -1;
         this.state.leaderboard.forEach(user => {
             obj.push(
                 <tr className={(this.props.currentUid == user.uid ? "highlighted" : "")}>
+                    <td>{prevUserKills != user.kills ? ranking : ""}</td>
                     <td>{user.firstName} {user.lastName}</td>
                     <td>{user.kills}</td>
                     <td>{user.eliminated ? "Yes" : "No"}</td>
                 </tr>
-            )
+            );
+            if(prevUserKills != user.kills) ranking += 1; // this is so that if two users have the same kills, they both have the same ranking
+            prevUserKills = user.kills;
         });
         return obj;
     }
@@ -55,9 +60,10 @@ class LeaderboardPage extends Component {
             <div className="p-3">
                 <Link to="/" className="w-100 center text-center mb-3">Go back</Link>
 
-                <Table bordered className="text-white">
+                <Table bordered responsive className="text-white">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Name</th>
                             <th># Kills</th>
                             <th>Eliminated?</th>

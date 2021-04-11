@@ -78,7 +78,11 @@ class HomePage extends Component {
                                 </Link>
                             </div>
 
-                            <CurrentTarget targetUid={this.props.userDetails.currentTarget} />
+                            {!this.props.userDetails.eliminated ? 
+                                <CurrentTarget targetUid={this.props.userDetails.currentTarget} />
+                            : <></> 
+                            }
+                            
                             <SafeItem/>
 
                             <div className="mb-3">

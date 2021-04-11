@@ -3,46 +3,42 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import firebase from "../../services/Firebase";
 import Loading from '../loading/Loading';
 import { toast } from 'react-toastify';
+import { UserDetailService } from '../../services/UserDetailService';
 
 class ReportKillPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            invalidTarget: false,
             assassinUid: this.props.userDetails.uid,
+            targetName: "",
             targetUid: "",
             photoFile: null,
             photoDataUrl: null,
+            error: "",
             loading: true
         }
-        this.handleTargetChange = this.handleTargetChange.bind(this);
         this.setFile = this.setFile.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
-        this.setState({loading: true});
-        let db = firebase.firestore();
-        db.collection("users").where("eliminated", "==", false).where("uid", "!=", this.props.userDetails.uid)
-        .get()
-        .then((querySnapshot) => {
-            let dropdownOptions = [];
-            querySnapshot.forEach((doc) => {
-                let data = doc.data();
-                dropdownOptions.push({
-                    name: data.firstName + " " + data.lastName,
-                    value: data.uid
-                });
-            });
+        let currentTarget = this.props.userDetails.currentTarget;
+        if(currentTarget == null || currentTarget.length == 0) {
             this.setState({
-                allTargets: dropdownOptions,
-                loading: false
+                invalidTarget: true
             });
-        });
-    }
+            return;
+        }
 
-    handleTargetChange(value) {
-        this.setState({
-            targetUid: value
+        this.setState({loading: true});
+
+        UserDetailService.getNameFromUid(currentTarget).then((targetName) => {
+            this.setState({
+                loading: false,
+                targetName: targetName,
+                targetUid: currentTarget
+            });
         });
     }
 
@@ -55,6 +51,17 @@ class ReportKillPage extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+
+        if(this.state.photoFile == null || this.state.photoDataUrl == null) { 
+            this.setState({
+                error: "You must submit a selfie to go along with the assassination report!"
+            });
+            return;
+        } else {
+            this.setState({
+                error: ""
+            });
+        }
 
         // Upload photo
         var photoRef = firebase.storage().ref().child(this.state.photoFile.name);
@@ -85,7 +92,9 @@ class ReportKillPage extends Component {
                 <h1>Report Assassination</h1>
             </div>
 
-            <div className="p-5 w-75 center">
+            <div className="p-3 w-75 center">
+                {this.state.error.length > 0 ? <p className="text-danger">{this.state.error}</p> : <></>}
+
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group as={Row}>
                         <Form.Label column sm="2">
@@ -101,7 +110,7 @@ class ReportKillPage extends Component {
                         Target
                         </Form.Label>
                         <Col sm="10">
-                            <Form.Control type="text" readOnly value={this.props.userDetails.firstName + " " + this.props.userDetails.lastName} />
+                            <Form.Control type="text" readOnly value={this.state.targetName} />
                         </Col>
                     </Form.Group>
 
@@ -110,18 +119,17 @@ class ReportKillPage extends Component {
                         Photo
                         </Form.Label>
                         <Col sm="10">
-                            <Form.File accept="image/*" capture onChange={(e) => {this.setFile(e.target.files[0])}}/>
+                            <Form.File accept="image/*" onChange={(e) => {this.setFile(e.target.files[0])}}/>
                         </Col>
                     </Form.Group>
 
                     <div className="d-flex flex-center mb-3">
                         <img src={this.state.photoDataUrl} className="kill-selfie"/>
                     </div>
-                    
 
                     <div className="d-flex flex-center">
                         <Button variant="secondary" className="mr-2" type="button" onClick={() => window.location.href = "/"}>Cancel</Button>
-                        <Button variant="primary" className="ml-2" type="submit">Submit</Button>
+                        <Button variant="danger" className="ml-2" type="submit">Report Kill</Button>
                     </div>
                 </Form>
             </div>
