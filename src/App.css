@@ -138,7 +138,11 @@ legend {
   position: relative;
 }
 
-.report-kill-btn {
+.homepage-body {
+  padding-bottom: 5em !important;
+}
+
+/* .report-kill-btn {
   position: fixed;
   bottom: 3em;
   right: 3em;
@@ -163,11 +167,29 @@ legend {
   font-size: 80%;
   position: absolute;
   top: 0;
-}
+} */
 
 .homepage-navbar {
-  position: sticky;
+  position: fixed;
   bottom: 0;
+  width: 100%;
+
+  background-color: #696969;
+  height: 4em;
+}
+
+.navbar-report-kill {
+  background-color: #DF2004;
+}
+
+.homepage-navbar div.col {
+  justify-content: center;
+  align-items: center;
+}
+
+.homepage-navbar div * {
+  font-size: 1.5em;
+  color: white;
 }
 
 /* Login */

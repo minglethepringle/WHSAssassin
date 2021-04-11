@@ -49,11 +49,10 @@ class LeaderboardPage extends Component {
         if(this.state.loading) return <Loading/>
         return (
         <>
-            <div className="p-5">
-                <div className="homepage-header text-center flex-row p-4 mb-3">
-                    <h1>Leaderboard</h1>
-                </div>
-
+            <div className="homepage-header text-center flex-row p-4 mb-3">
+                <h1>Leaderboard</h1>
+            </div>
+            <div className="p-3">
                 <Link to="/" className="w-100 center text-center mb-3">Go back</Link>
 
                 <Table bordered className="text-white">

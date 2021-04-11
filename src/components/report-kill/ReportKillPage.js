@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Row, Col } from "react-bootstrap";
 import firebase from "../../services/Firebase";
-import SelectSearch, { fuzzySearch } from 'react-select-search';
 import Loading from '../loading/Loading';
 import { toast } from 'react-toastify';
 
@@ -9,7 +8,6 @@ class ReportKillPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allTargets: [],
             assassinUid: this.props.userDetails.uid,
             targetUid: "",
             photoFile: null,
@@ -94,7 +92,7 @@ class ReportKillPage extends Component {
                         Assassin
                         </Form.Label>
                         <Col sm="10">
-                        <Form.Control type="text" readOnly value={this.props.userDetails.firstName + " " + this.props.userDetails.lastName} />
+                            <Form.Control type="text" readOnly value={this.props.userDetails.firstName + " " + this.props.userDetails.lastName} />
                         </Col>
                     </Form.Group>
 
@@ -103,13 +101,7 @@ class ReportKillPage extends Component {
                         Target
                         </Form.Label>
                         <Col sm="10">
-                        <SelectSearch
-                            options={this.state.allTargets}
-                            search
-                            filterOptions={fuzzySearch}
-                            placeholder="Select your target"
-                            onChange={this.handleTargetChange}
-                        />
+                            <Form.Control type="text" readOnly value={this.props.userDetails.firstName + " " + this.props.userDetails.lastName} />
                         </Col>
                     </Form.Group>
 
