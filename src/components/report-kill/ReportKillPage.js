@@ -4,6 +4,7 @@ import firebase from "../../services/Firebase";
 import Loading from '../loading/Loading';
 import { toast } from 'react-toastify';
 import { UserDetailService } from '../../services/UserDetailService';
+import { Link } from 'react-router-dom';
 
 class ReportKillPage extends Component {
     constructor(props) {
@@ -26,7 +27,8 @@ class ReportKillPage extends Component {
         let currentTarget = this.props.userDetails.currentTarget;
         if(currentTarget == null || currentTarget.length == 0) {
             this.setState({
-                invalidTarget: true
+                invalidTarget: true,
+                loading: false
             });
             return;
         }
@@ -87,12 +89,21 @@ class ReportKillPage extends Component {
 
     render() { 
         if(this.state.loading) return <Loading/>
+        if(this.state.invalidTarget) {
+            return (
+                <div className="p-3 text-center center">
+                    <h3>You have no target assigned to assassinate.</h3>
+                    <Link to="/" className="w-100 center text-center mb-3">Go back</Link>
+                </div>
+            )
+        }
         return <>
             <div className="homepage-header text-center flex-row p-4 mb-3">
                 <h1>Report Assassination</h1>
             </div>
 
             <div className="p-3 w-75 center">
+                <Link to="/" className="w-100 center text-center mb-3">Go back</Link>
                 {this.state.error.length > 0 ? <p className="text-danger">{this.state.error}</p> : <></>}
 
                 <Form onSubmit={this.handleSubmit}>

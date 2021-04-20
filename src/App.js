@@ -20,7 +20,7 @@ import LogOut from "./components/login/LogOut";
 import ReportKillPage from "./components/report-kill/ReportKillPage";
 import Loading from "./components/loading/Loading";
 import KillReviewPage from "./components/admin/killreview/KillReviewPage";
-import SafeItemPage from "./components/admin/SafeItemPage";
+import RoundInfoPage from "./components/admin/RoundInfoPage";
 import PastKillsPage from "./components/admin/pastkills/PastKillsPage";
 import AdminPanelPage from "./components/admin/AdminPanelPage";
 import LeaderboardPage from "./components/leaderboard/LeaderboardPage";
@@ -106,7 +106,7 @@ class App extends React.Component {
                 <>
                 <Route exact path="/admin" component={AdminPanelPage} />
                 <Route path="/admin/killreview" component={KillReviewPage} />
-                <Route path="/admin/safeitem" component={SafeItemPage} />
+                <Route path="/admin/roundinfo" component={RoundInfoPage} />
                 <Route path="/admin/pastkills" component={PastKillsPage} />
                 </>
               )

@@ -10,17 +10,22 @@ import { CSSTransition } from 'react-transition-group';
 import logo from "../../images/WHSAssassin.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faBook, faBookDead, faImages, faInfo, faListOl} from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
 class HomePage extends Component {
     constructor() {
         super();
         this.state = {
             showIntro: false,
-            showBody: false
+            showBody: false,
+            roundDetails: {
+                safeitem: "",
+                enddate: ""
+            }
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         let _this = this;
         setTimeout(() => {
             _this.setState({showIntro: true, showBody: false});
@@ -30,10 +35,18 @@ class HomePage extends Component {
             _this.setState({showIntro: false, showBody: true});
         }, 3500);
 
-        const script = document.createElement("script");
+        let db = firebase.firestore();
+        let doc = await db.collection("roundinfo").doc("roundinfo").get();
+        this.setState({
+            roundDetails: {
+                safeitem: doc.data().safeitem,
+                enddate: doc.data().enddate
+            }
+        });
+        // const script = document.createElement("script");
 
-        script.src = "https://widget.tagembed.com/embed.min.js";
-        document.body.appendChild(script);
+        // script.src = "https://widget.tagembed.com/embed.min.js";
+        // document.body.appendChild(script);
     }
 
     setShowBody(val) {
@@ -83,18 +96,43 @@ class HomePage extends Component {
                             : <></> 
                             }
                             
-                            <SafeItem/>
-
                             <div className="mb-3">
                                 <Card bg="dark">
                                     <Card.Body className="text-center">
-                                        <Card.Title><u>ASSASSINATIONS</u></Card.Title>
+                                        <Card.Title><u>SAFE ITEM</u></Card.Title>
                                         <Card.Text>
-                                        <h2><b>{this.props.userDetails.kills}</b></h2>
+                                        <h2><b>{this.state.roundDetails.safeitem.length > 0 ? this.state.roundDetails.safeitem : "NONE"}</b></h2>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
-                            </div>   
+                            </div>  
+
+                            <Row>
+                                <Col>
+                                    <div className="mb-3 w-100">
+                                        <Card bg="dark">
+                                            <Card.Body className="text-center">
+                                                <Card.Title><u>ASSASSINATIONS</u></Card.Title>
+                                                <Card.Text>
+                                                <h2><b>{this.props.userDetails.kills}</b></h2>
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>
+                                    </div>   
+                                </Col>
+                                <Col>
+                                    <div className="mb-3 w-100">
+                                        <Card bg="dark">
+                                            <Card.Body className="text-center">
+                                                <Card.Title><u>ROUND END</u></Card.Title>
+                                                <Card.Text>
+                                                <h2><b>{this.state.roundDetails.enddate.length > 0 ? moment(this.state.roundDetails.enddate).diff(moment(), "days") + " DAYS" : "N/A"}</b></h2>
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>
+                                    </div>   
+                                </Col>
+                            </Row>
                         </div>
 
                         <div className="homepage-navbar d-flex flex-row">
