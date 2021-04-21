@@ -18,7 +18,7 @@ class KillReviewPage extends Component {
         let killCards = [];
 
         let db = firebase.firestore();
-        db.collection("kills").where("modConfirmed", "==", false)
+        db.collection("kills").where("modConfirmed", "==", false).orderBy("timestamp", "asc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -48,6 +48,7 @@ class KillReviewPage extends Component {
             <div className="p-5">
                 <div className="homepage-header text-center flex-row p-4 mb-3">
                     <h1>Kill Review</h1>
+                    <b>Please approve kills in the correct order, which is top to bottom!</b>
                 </div>
                 <Link to="/admin" className="w-100 center text-center mb-3">Go Back</Link>
                 <div className="">

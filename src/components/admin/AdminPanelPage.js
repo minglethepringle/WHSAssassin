@@ -39,6 +39,7 @@ class AdminPanelPage extends Component {
                 userArr.forEach(user => {
                     db.collection("users").doc(user.uid).update({
                         currentTarget: "",
+                        roundStartTarget: "",
                         eliminated: false,
                         kills: 0
                     });
@@ -54,6 +55,8 @@ class AdminPanelPage extends Component {
             let db = firebase.firestore();
             db.collection("users").where("eliminated", "==", false).get().
             then((querySnapshot) => {
+                debugger;
+
                 let userArr = [];
                 querySnapshot.forEach((doc) => {
                     userArr.push(doc.data());
@@ -63,6 +66,7 @@ class AdminPanelPage extends Component {
                     if(user.roundStartTarget == user.currentTarget) {
                         db.collection("users").doc(user.uid).update({
                             currentTarget: "",
+                            roundStartTarget: "",
                             eliminated: true
                         });
                     }
@@ -76,14 +80,24 @@ class AdminPanelPage extends Component {
     resetTargets() {
         if(window.confirm("Are you sure you want to reset all targets?") && window.confirm("Are you absolutely positive? This action is irreversible.")) {
             let db = firebase.firestore();
-            db.collection("users").where("eliminated", "==", false).orderBy("timestamp", "desc").get().
+            db.collection("users").where("eliminated", "==", false).orderBy("timestamp", "asc").get().
             then((querySnapshot) => {
+                debugger;
+
                 let size = querySnapshot.size;
                 let userArr = [];
                 querySnapshot.forEach((doc) => {
                     userArr.push(doc.data());
                 });
-                let randomOffset = Math.floor(Math.random() * (size - 1)) + 1; // if 10 users, random offset is [1, 9]
+
+                /**
+                 * Edge case: If user arr is size 4 and offset is 2, circular pairing will break.
+                 * Solution: Keep generating offset if the offset is half the user arr size.
+                 */
+                let randomOffset = 0;
+                do {
+                    randomOffset = Math.floor(Math.random() * (size - 1)) + 1; // if 10 users, random offset is [1, 9]
+                } while ((randomOffset == userArr.length / 2 && userArr.length % 2 == 0));
                 
                 // Create new arr for editing
                 let updatedArr = JSON.parse(JSON.stringify(userArr));
@@ -131,10 +145,9 @@ class AdminPanelPage extends Component {
         return (<>
             <div className="homepage-header text-center flex-row p-4 mb-3">
                 <h1>Moderator Panel</h1>
+                <Link to="/" className="w-100 center text-center">Go back</Link>
             </div>
             <div className="p-3">
-                <Link to="/" className="w-100 center text-center mb-3">Go back</Link>
-
                 <Jumbotron fluid className="bg-dark text-center">
                     <Container> 
                         {this.state.numNewKills > 0 ? 

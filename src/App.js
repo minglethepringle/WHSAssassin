@@ -24,6 +24,9 @@ import RoundInfoPage from "./components/admin/RoundInfoPage";
 import PastKillsPage from "./components/admin/pastkills/PastKillsPage";
 import AdminPanelPage from "./components/admin/AdminPanelPage";
 import LeaderboardPage from "./components/leaderboard/LeaderboardPage";
+import RulesPage from "./components/rules/RulesPage";
+import GalleryPage from "./components/gallery/GalleryPage";
+import AboutPage from "./components/about/AboutPage";
 
 class App extends React.Component {
   constructor() {
@@ -98,6 +101,21 @@ class App extends React.Component {
 
           <Route path="/leaderboard" render={(props) => (this.state.authenticated === true)
               ? <LeaderboardPage currentUid={this.state.userDetails.uid}/>
+              : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+              />
+
+          <Route path="/rules" render={(props) => (this.state.authenticated === true)
+              ? <RulesPage/>
+              : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+              />
+
+          <Route path="/gallery" render={(props) => (this.state.authenticated === true)
+              ? <GalleryPage/>
+              : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+              />
+
+          <Route path="/about" render={(props) => (this.state.authenticated === true)
+              ? <AboutPage/>
               : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
               />
 

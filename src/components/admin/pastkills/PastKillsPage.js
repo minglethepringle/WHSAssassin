@@ -19,7 +19,9 @@ class PastKillsPage extends Component {
         let killCards = [];
 
         let db = firebase.firestore();
-        db.collection("kills").orderBy("timestamp", "desc")
+        db.collection("kills")
+        .where("modConfirmed", "==", true)
+        .orderBy("timestamp", "desc")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -66,9 +68,9 @@ class PastKillsPage extends Component {
             <>
             <div className="homepage-header text-center flex-row p-4 mb-3">
                 <h1>Past Assassinations</h1>
+                <Link to="/admin" className="w-100 center text-center">Go Back</Link>
             </div>
             <div className="p-1">
-                <Link to="/admin" className="w-100 center text-center mb-3">Go Back</Link>
                 <Table bordered responsive className="text-white">
                     <thead>
                         <tr>

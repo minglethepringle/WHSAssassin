@@ -42,7 +42,9 @@ class KillReviewCard extends Component {
         });
 
         db.collection("users").doc(this.props.kill.target).update({
-            eliminated: true
+            eliminated: true,
+            currentTarget: "",
+            roundStartTarget: ""
         });
 
         toast.success("Assassination confirmed!");

@@ -52,7 +52,6 @@ class RoundInfoPage extends Component {
         }
 
         let formattedEndDate = moment(this.state.enddate).format("MM/DD/YYYY");
-        debugger;
 
         let db = firebase.firestore();
         db.collection("roundinfo").doc("roundinfo").update({
@@ -69,10 +68,9 @@ class RoundInfoPage extends Component {
         <>
             <div className="homepage-header text-center flex-row p-4 mb-3">
                 <h1>Round Details Page</h1>
+                <Link to="/admin" className="w-100 center text-center">Go back</Link>
             </div>
             <div className="p-3">
-                <Link to="/admin" className="w-100 center text-center mb-3">Go back</Link>
-
                 <Form onSubmit={this.handleSubmit} className="w-75 text-center center">
                     <Form.Group as={Row}>
                         <Form.Label column sm="2">

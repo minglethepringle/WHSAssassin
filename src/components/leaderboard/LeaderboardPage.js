@@ -56,10 +56,9 @@ class LeaderboardPage extends Component {
         <>
             <div className="homepage-header text-center flex-row p-4 mb-3">
                 <h1>Leaderboard</h1>
+                <Link to="/" className="w-100 center text-center">Go back</Link>
             </div>
             <div className="p-3">
-                <Link to="/" className="w-100 center text-center mb-3">Go back</Link>
-
                 <Table bordered responsive className="text-white">
                     <thead>
                         <tr>
