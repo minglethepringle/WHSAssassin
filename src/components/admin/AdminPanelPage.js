@@ -90,6 +90,11 @@ class AdminPanelPage extends Component {
                     userArr.push(doc.data());
                 });
 
+                if(size == 2) {
+                    toast.warning("There are only two people left!");
+                    return;
+                }
+
                 /**
                  * Edge case: If user arr is size 4 and offset is 2, circular pairing will break.
                  * Solution: Keep generating offset if the offset is half the user arr size.
