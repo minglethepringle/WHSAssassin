@@ -17,6 +17,7 @@ class ReportKillPage extends Component {
             photoFile: null,
             photoDataUrl: null,
             error: "",
+            disableSubmit: false,
             loading: true
         }
         this.setFile = this.setFile.bind(this);
@@ -64,6 +65,10 @@ class ReportKillPage extends Component {
                 error: ""
             });
         }
+
+        this.setState({
+            disableSubmit: true
+        });
 
         // Upload photo
         var photoRef = firebase.storage().ref().child(this.state.photoFile.name);
@@ -138,10 +143,15 @@ class ReportKillPage extends Component {
                         <img src={this.state.photoDataUrl} className="kill-selfie"/>
                     </div>
 
-                    <div className="d-flex flex-center">
+                    <div className="d-flex flex-center mb-5">
                         <Button variant="secondary" className="mr-2" type="button" onClick={() => window.location.href = "/"}>Cancel</Button>
-                        <Button variant="danger" className="ml-2" type="submit">Report Kill</Button>
+                        <Button variant="danger" className="ml-2" type="submit" disabled={this.state.disableSubmit}>Report Kill</Button>
                     </div>
+
+                    <div className="text-center">
+                        <small>Please click Report Kill and wait a couple seconds for submission!</small>
+                    </div>
+                    
                 </Form>
             </div>
         </>;

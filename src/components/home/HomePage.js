@@ -126,7 +126,7 @@ class HomePage extends Component {
                                             <Card.Body className="text-center">
                                                 <Card.Title><u>ROUND END</u></Card.Title>
                                                 <Card.Text>
-                                                <h2><b>{this.state.roundDetails.enddate.length > 0 ? moment(this.state.roundDetails.enddate).diff(moment(), "days") + " DAYS" : "N/A"}</b></h2>
+                                                <h2><b>{this.state.roundDetails.enddate.length > 0 ? moment(this.state.roundDetails.enddate).format("MM/DD") : "N/A"}</b></h2>
                                                 </Card.Text>
                                             </Card.Body>
                                         </Card>
