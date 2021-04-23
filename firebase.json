@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "whsassassin2021",
     "public": "build",
     "ignore": [
       "firebase.json",
