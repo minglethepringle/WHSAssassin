@@ -35,10 +35,10 @@ class LoginPage extends Component {
             
             <div className="w-100 flex-center">
                 <div className="login-form">
-                    {this.state.showSignUp ? <SignUp/> : <SignIn/>}
-                    <div className="text-center mt-3">
+                    <SignIn/>
+                    {/* <div className="text-center mt-3">
                         <Button variant="link" onClick={this.toggleSignUp}>{this.state.showSignUp ? "Go back to login" : "Create an account"}</Button>                        
-                    </div>  
+                    </div>   */}
 
                 </div>  
 
