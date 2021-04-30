@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Loading from "../loading/Loading";
 import firebase from "../../services/Firebase";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserDetailService } from "../../services/UserDetailService";
 
@@ -34,24 +34,23 @@ class GalleryPage extends Component {
                     target: data.target 
                 });
             });
-            
-            photoData.forEach((data) => {
-                UserDetailService.getNameFromUid(data.assassin)
-                .then(assassin => {
-                    UserDetailService.getNameFromUid(data.target)
-                    .then(target => {
-                        imgArr.push(
-                            <Col xs="12" sm="6" md="4">
-                                <img src={data.photo} className="w-100 mb-1 border border-danger"/>
-                                <p>{assassin} ☠️ {target}</p>
-                            </Col>
-                        );
-                        _this.setState({
-                            imgArr: imgArr
-                        });
+
+            (async () => {
+                for (const data of photoData) {
+                    let assassin = await UserDetailService.getNameFromUid(data.assassin);
+                    let target = await UserDetailService.getNameFromUid(data.target);
+                    imgArr.push(
+                        <Col xs="12" sm="6" md="4">
+                            <img src={data.photo} className="w-100 mb-1 border border-danger"/>
+                            <p>{assassin} ☠️ {target}</p>
+                        </Col>
+                    );
+                    _this.setState({
+                        imgArr: imgArr
                     });
-                });
-            });
+                }
+            })();
+            
         }).then(() => {
             _this.setState({
                 loading: false
@@ -67,7 +66,9 @@ class GalleryPage extends Component {
                 <Link to="/" className="w-100 center text-center">Go back</Link>
             </div>
             <div className="p-3 text-center">
-                {this.state.imgArr}
+                <Row>
+                    {this.state.imgArr}
+                </Row>
             </div>
         </>
     }
